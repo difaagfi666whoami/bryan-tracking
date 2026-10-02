@@ -1,0 +1,108 @@
+{
+  "sourceWorkbookName": "28-02.xlsx",
+  "sheetNames": ["Monday", "Tuesday", "Wed", "Thu", "Friday", "PATCH"],
+  "weekDates": [
+    "2026-09-28",
+    "2026-09-29",
+    "2026-09-30",
+    "2026-10-01",
+    "2026-10-02"
+  ],
+  "layout": {
+    "makerCell": "D1",
+    "checkerCell": "G1",
+    "startCell": "C2",
+    "startTimeCell": "D2",
+    "remarkCell": "E2",
+    "checkCell": "F2",
+    "checkTimeCell": "G2",
+    "serverColumn": "A",
+    "taskColumn": "B",
+    "mergedServerGroups": [[3, 13], [14, 15], [16, 17]]
+  },
+  "dailySheets": [
+    {
+      "name": "Monday",
+      "maker": "Other",
+      "checker": "Bryan",
+      "timestampDate": "2026-09-28",
+      "tasks": 26,
+      "startTrue": 25,
+      "startFalse": 1,
+      "checkTrue": 25,
+      "checkFalse": 1,
+      "startTimes": 25,
+      "checkTimes": 25,
+      "okRemarks": 26,
+      "blankRemarks": 0
+    },
+    {
+      "name": "Tuesday",
+      "maker": "Bryan",
+      "checker": "Other",
+      "timestampDate": "2026-09-29",
+      "tasks": 26,
+      "startTrue": 25,
+      "startFalse": 1,
+      "checkTrue": 25,
+      "checkFalse": 1,
+      "startTimes": 25,
+      "checkTimes": 25,
+      "okRemarks": 26,
+      "blankRemarks": 0
+    },
+    {
+      "name": "Wed",
+      "maker": "Bryan",
+      "checker": "Other",
+      "timestampDate": "2026-09-30",
+      "tasks": 25,
+      "startTrue": 25,
+      "startFalse": 0,
+      "checkTrue": 25,
+      "checkFalse": 0,
+      "startTimes": 25,
+      "checkTimes": 25,
+      "okRemarks": 25,
+      "blankRemarks": 0
+    },
+    {
+      "name": "Thu",
+      "maker": "Bryan",
+      "checker": "Other",
+      "timestampDate": null,
+      "tasks": 26,
+      "startTrue": 0,
+      "startFalse": 26,
+      "checkTrue": 0,
+      "checkFalse": 26,
+      "startTimes": 0,
+      "checkTimes": 0,
+      "okRemarks": 25,
+      "blankRemarks": 1
+    },
+    {
+      "name": "Friday",
+      "maker": "Bryan",
+      "checker": "Other",
+      "timestampDate": null,
+      "tasks": 26,
+      "startTrue": 0,
+      "startFalse": 26,
+      "checkTrue": 0,
+      "checkFalse": 26,
+      "startTimes": 0,
+      "checkTimes": 0,
+      "okRemarks": 25,
+      "blankRemarks": 1
+    }
+  ],
+  "supportingSheets": ["PATCH"],
+  "dailyExemptionRemarkCounts": {
+    "holiday": 0,
+    "maintenance": 0,
+    "not required": 0,
+    "server offline": 0,
+    "market holiday": 0
+  }
+}
