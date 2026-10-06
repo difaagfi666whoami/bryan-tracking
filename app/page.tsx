@@ -47,7 +47,7 @@ export default function HomePage() {
   return (
     <main className="page-shell">
       <header className="topline">
-        <div><p className="eyebrow">OPERATIONS · 90 WORKING DAYS</p><h1>Morning Start</h1><p className="subhead">Bryan <span>·</span> tracking from 22 September 2026</p></div>
+        <div className="identity-block"><p className="eyebrow">OPERATIONS · 90 WORKING DAYS</p><h1 className="brand-title">Morning Start <span className="brand-person">- Bryan Bestradda</span></h1><p className="subhead">Tracking from 22 September 2026</p></div>
         <button className="refresh" onClick={() => void refresh()} disabled={loading}>{loading ? "Refreshing…" : "Refresh source"}</button>
       </header>
 

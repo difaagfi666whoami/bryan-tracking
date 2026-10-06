@@ -49,3 +49,27 @@
 .task-meta span{font-size:11px;overflow-wrap:anywhere}
 .task-line p{margin:3px 0 0;padding:7px 9px;border-left:2px solid #65717b;background:var(--wash);font-size:11px;overflow-wrap:anywhere}
 .missed-detail .task-line p{border-left-color:var(--red)}
+
+.identity-block{min-width:0}
+.brand-title{max-width:800px;margin:3px 0 12px;font-size:clamp(34px,4vw,44px);font-weight:650;letter-spacing:-1.8px;line-height:1.04}
+.brand-person{display:inline;margin-left:.18em}
+.subhead{font-size:14px;line-height:1.5}
+.overview{padding:25px 22px 26px;background:var(--wash);border-top:1px solid var(--line)}
+.progress-track{height:5px;border-radius:4px}
+.progress-track i{border-radius:4px}
+.metric{min-height:64px}
+.refresh:hover,.text-button:hover{background:var(--wash);border-color:#cbd5dc}
+
+@media(max-width:720px){
+  .page-shell{padding:30px 18px 24px}
+  .topline{gap:18px;padding-bottom:25px}
+  .brand-title{font-size:clamp(30px,7vw,38px);letter-spacing:-1.2px}
+  .overview{padding:20px 15px 21px}
+  .metric{min-height:58px}
+}
+
+@media(max-width:480px){
+  .topline{flex-direction:column;align-items:flex-start}
+  .refresh{align-self:flex-start}
+  .brand-title{font-size:30px;letter-spacing:-1px}
+}
