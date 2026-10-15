@@ -242,6 +242,8 @@ Relevant action is TRUE and/or valid completion information exists.
 ### MISSED
 Relevant action is FALSE or blank and there is no valid exemption.
 
+An explicit remark naming Bryan immediately followed by `MISSED` also marks the task as missed, even when the relevant action is TRUE or has a completion time. This signal takes precedence over completion and lateness and does not apply to remarks naming another person.
+
 ### EXEMPT
 Relevant action is FALSE/blank but the remark clearly indicates the task should not be counted.
 

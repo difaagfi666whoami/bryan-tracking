@@ -695,7 +695,7 @@ Relevant action is FALSE/blank and remark matches exemption rules.
 
 ### Missed
 
-Relevant action is FALSE/blank and no valid exemption exists.
+Relevant action is FALSE/blank and no valid exemption exists. An explicit remark containing the tracked person's name immediately followed by `MISSED` (case-insensitive, for example `BRYAN MISSED-...`) also marks the task as missed regardless of the action value or completion time. This signal takes precedence over completion/lateness and applies only when the remark names the tracked person.
 
 ---
 

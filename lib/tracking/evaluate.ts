@@ -5,13 +5,17 @@ import { isExemptRemark } from "@/lib/tracking/exemptions";
 import { detectRole } from "@/lib/tracking/roles";
 import { isLate, parseTime } from "@/lib/tracking/time";
 
-function evaluateTask(task: ParsedSheet["tasks"][number], role: Role): TaskEvaluation {
+function evaluateTask(task: ParsedSheet["tasks"][number], role: Role, person: string): TaskEvaluation {
   const value = role === "MAKER" ? task.start : task.check;
   const time = role === "MAKER" ? task.startTime : task.checkTime;
   if (time && parseTime(time) === null) throw new Error(`Invalid checklist completion time for ${task.identifier}`);
-  const status = value === true && parseTime(time) !== null
-    ? "COMPLETED"
-    : isExemptRemark(task.remark) ? "EXEMPT" : "MISSED";
+  const escapedPerson = person.trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const explicitlyMissed = escapedPerson.length > 0 && new RegExp(`\\b${escapedPerson}[\\s-]+missed\\b`, "i").test(task.remark ?? "");
+  const status = explicitlyMissed
+    ? "MISSED"
+    : value === true && parseTime(time) !== null
+      ? "COMPLETED"
+      : isExemptRemark(task.remark) ? "EXEMPT" : "MISSED";
   return {
     identifier: task.identifier,
     description: task.description,
@@ -42,7 +46,7 @@ export function evaluateDay(sheet: ParsedSheet | null, date: string, person = co
   if (!sheet) return blank;
   const role = detectRole(sheet.maker, sheet.checker, person);
   if (role === "NOT_ASSIGNED") return { ...blank, role, status: "NOT_ASSIGNED", totalTasks: sheet.tasks.length };
-  const evaluations = sheet.tasks.map((task) => evaluateTask(task, role));
+  const evaluations = sheet.tasks.map((task) => evaluateTask(task, role, person));
   const completed = evaluations.filter((task) => task.status === "COMPLETED");
   const missedItems = evaluations.filter((task) => task.status === "MISSED");
   const exemptItems = evaluations.filter((task) => task.status === "EXEMPT");

@@ -233,6 +233,26 @@ test("evaluates completed, missed, exempt, late, absent, and no-data days", () =
   assert.equal(multipleMisses.missedTasks, 2);
 });
 
+test("an explicit Bryan MISSED remark overrides TRUE checklist values", () => {
+  const remark = "BRYAN MISSED-there is an anomaly log today, waiting PIC response (handled by Cyrus)";
+  const day = evaluateDay({
+    ...fixture,
+    tasks: [{ ...fixture.tasks[0], start: true, startTime: "8:10:46 AM", check: true, checkTime: "8:12:45 AM", remark }],
+  }, fixture.date);
+
+  assert.equal(day.status, "MISSED");
+  assert.equal(day.completedTasks, 0);
+  assert.equal(day.missedTasks, 1);
+  assert.equal(day.late, false);
+  assert.equal(day.missedItems[0]?.remark, remark);
+
+  const otherPerson = evaluateDay({
+    ...fixture,
+    tasks: [{ ...fixture.tasks[0], start: true, remark: "Cyrus MISSED-this is handled by Bryan" }],
+  }, fixture.date);
+  assert.equal(otherPerson.status, "COMPLETED");
+});
+
 test("parses cutoff times using Hong Kong wall-clock source values", () => {
   assert.equal(parseTime("12:00:01 AM"), 1);
   assert.equal(parseTime("8:00:00 AM"), 28800);
