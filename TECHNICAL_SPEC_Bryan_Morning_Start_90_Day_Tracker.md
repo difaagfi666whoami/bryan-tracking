@@ -663,6 +663,10 @@ as exempt unless explicitly configured.
 
 # 20. Task Classification
 
+## Validated source recovery exception
+
+The corrupted `26-30.xlsx` workbook must not be parsed. For 2026-10-26 through 2026-10-30 only, return a validated manual evaluation of Bryan as Maker with 25/25 tasks completed, no misses, no exemptions, and no late tasks. The override must be date-scoped, must provide source coverage for those five dates, and must not affect any other workbook or date.
+
 Create:
 
 ```ts

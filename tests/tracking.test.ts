@@ -8,6 +8,7 @@ import { evaluateDay } from "@/lib/tracking/evaluate";
 import { isExemptRemark } from "@/lib/tracking/exemptions";
 import { detectRole } from "@/lib/tracking/roles";
 import { parseTime, isLate } from "@/lib/tracking/time";
+import { allDatesManuallyOverridden, manualDailyEvaluation } from "@/lib/tracking/manual-overrides";
 import { normalizeBoolean, parseWorkbook, parseWorksheet } from "@/lib/parser/worksheet";
 import { resolveWorkbookWeek, resolveWorksheetDates } from "@/lib/parser/date-resolver";
 import type { DailyEvaluation, ParsedSheet } from "@/lib/types";
@@ -251,6 +252,22 @@ test("an explicit Bryan MISSED remark overrides TRUE checklist values", () => {
     tasks: [{ ...fixture.tasks[0], start: true, remark: "Cyrus MISSED-this is handled by Bryan" }],
   }, fixture.date);
   assert.equal(otherPerson.status, "COMPLETED");
+});
+
+test("uses the validated completed-day override only for 26-30 October", () => {
+  const overrideDates = ["2026-10-26", "2026-10-27", "2026-10-28", "2026-10-29", "2026-10-30"];
+  assert.equal(allDatesManuallyOverridden(overrideDates), true);
+  assert.equal(allDatesManuallyOverridden([...overrideDates, "2026-11-02"]), false);
+  for (const date of overrideDates) {
+    const day = manualDailyEvaluation(date);
+    assert.equal(day?.role, "MAKER");
+    assert.equal(day?.status, "COMPLETED");
+    assert.equal(day?.totalTasks, 25);
+    assert.equal(day?.completedTasks, 25);
+    assert.equal(day?.completionRate, 100);
+  }
+  assert.equal(manualDailyEvaluation("2026-10-23"), null);
+  assert.equal(manualDailyEvaluation("2026-11-02"), null);
 });
 
 test("parses cutoff times using Hong Kong wall-clock source values", () => {

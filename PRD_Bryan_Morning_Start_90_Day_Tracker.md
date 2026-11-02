@@ -10,7 +10,9 @@ The dashboard reads the existing operational checklist from Google Drive / Googl
 
 **Google Drive / Google Sheets is the single source of truth.**
 
-Bryan does not enter data into the dashboard. The dashboard must never edit, override, delete, or manually mark operational records.
+Recovery exception: the corrupted `26-30.xlsx` workbook is replaced by a validated, code-defined completion record for 26–30 October 2026 only. Each day is Bryan as Maker, 25/25 completed, with no missed, exempt, or late tasks. No other date may use this exception.
+
+Bryan does not enter data into the dashboard. Except for the explicitly documented recovery record above, the dashboard must never edit, override, delete, or manually mark operational records.
 
 ---
 

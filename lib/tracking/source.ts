@@ -7,6 +7,7 @@ import { generateTrackingDates } from "@/lib/tracking/dates";
 import { missingSourceCoverageDates, selectRelevantSources } from "@/lib/tracking/source-selection";
 import { aggregateTracking } from "@/lib/tracking/aggregate";
 import { evaluateDay } from "@/lib/tracking/evaluate";
+import { allDatesManuallyOverridden, manualDailyEvaluation, manualOverrideDates } from "@/lib/tracking/manual-overrides";
 
 export async function getTrackingData() {
   const dates = generateTrackingDates(config.trackingStartDate, config.trackingWorkingDays);
@@ -21,6 +22,10 @@ export async function getTrackingData() {
       const previous = owners.get(date);
       if (previous) throw new Error(`Multiple weekly workbooks cover ${date}: ${previous} and ${source.path}`);
       owners.set(date, source.path);
+    }
+    if (allDatesManuallyOverridden(overlapping)) {
+      console.warn("Using validated manual tracking data for unreadable workbook", { source: source.path, dates: overlapping });
+      continue;
     }
     const workbook = parseWorkbook(await downloadSource(source));
     const dailySheets = workbook.flatMap((worksheet) => {
@@ -37,12 +42,13 @@ export async function getTrackingData() {
     }
   }
   const today = new Intl.DateTimeFormat("en-CA", { timeZone: config.timezone }).format(new Date());
-  const missingCoverage = missingSourceCoverageDates(dates, dateSheets.keys(), today);
+  const coveredDates = new Set([...dateSheets.keys(), ...manualOverrideDates()]);
+  const missingCoverage = missingSourceCoverageDates(dates, coveredDates, today);
   if (missingCoverage.length > 0) {
     throw new Error(`Source coverage incomplete for tracked dates: ${missingCoverage.join(", ")}`);
   }
   const days: DailyEvaluation[] = dates.map((date) => {
-    return evaluateDay(dateSheets.get(date) ?? null, date);
+    return manualDailyEvaluation(date) ?? evaluateDay(dateSheets.get(date) ?? null, date);
   });
   return aggregateTracking(config.trackingPerson, dates, days);
 }
